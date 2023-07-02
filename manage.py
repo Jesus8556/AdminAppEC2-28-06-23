@@ -2,6 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import subprocess
+# Ruta al archivo mqtt.py dentro de tu proyecto
+ruta_mqtt = os.path.join(os.path.dirname(__file__), 'api/mqtt.py')
+
+# Ejecuta el archivo mqtt.py usando subprocess
+subprocess.Popen(['python', ruta_mqtt])
 
 
 def main():
