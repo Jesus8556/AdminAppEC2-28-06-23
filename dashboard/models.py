@@ -18,7 +18,7 @@ class Roles(models.Model):
     ]
     nombre = models.CharField(max_length=100, choices=ROL_CHOICES)
     def __str__(self):
-        return self.nombre 
+        return self.nombre.capitalize()
 
 
 
@@ -148,7 +148,7 @@ class Nota(models.Model):
     nota = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
-        return f"Nota de {self.alumno} en {self.laboratorio}"
+        return f"Nota de {self.alumno} en {self.laboratorio.nombre}"
     
    
 @receiver(post_save, sender=Alumno)
