@@ -26,10 +26,33 @@ class CursoView(viewsets.ModelViewSet):
 class AsistenciaView(viewsets.ModelViewSet):
     queryset = Asistencia.objects.all()
     serializer_class = AsistenciasSerializer
+    def get_queryset(self):
+        queryset = Asistencia.objects.all()
+
+        # Obtener el ID del alumno y el ID del curso desde los parámetros de la URL
+        alumno_id = self.request.query_params.get('alumno', None)
+        curso_id = self.request.query_params.get('curso', None)
+
+        # Aplicar los filtros si se proporcionan los IDs del alumno y el curso
+        if alumno_id and curso_id:
+            queryset = queryset.filter(alumno=int(alumno_id), curso=int(curso_id))
+
+        return queryset
 
 class NotaView(viewsets.ModelViewSet):
     queryset = Nota.objects.all()
     serializer_class = NotasSerializer
+    def get_queryset(self):
+        queryset = Nota.objects.all()
+
+        # Obtener el ID del alumno y el ID del curso desde los parámetros de la URL
+        alumno_id = self.request.query_params.get('alumno', None)
+
+        # Aplicar los filtros si se proporcionan los IDs del alumno y el curso
+        if alumno_id:
+            queryset = queryset.filter(alumno=alumno_id)
+
+        return queryset
     
 
 class InscripcionView(viewsets.ModelViewSet):
@@ -53,6 +76,10 @@ class ObtenerInscripcionesViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         alumno_id = self.kwargs['alumno_id']
         return Inscripcion.objects.filter(alumno=alumno_id)
+
+class LaboratorioView(viewsets.ModelViewSet):
+    queryset = Laboratorio.objects.all()
+    serializer_class = LaboratorioSerializer
     
 class NotaByAlumnoAndCursoView(viewsets.ReadOnlyModelViewSet):
     serializer_class = NotasSerializer

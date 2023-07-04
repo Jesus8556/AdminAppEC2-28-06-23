@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers,generics
 from dashboard.models import *
 
 class CuentaSerializer(serializers.ModelSerializer):
@@ -38,6 +38,21 @@ class AsistenciasSerializer(serializers.ModelSerializer):
 class NotasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nota
+        fields = '__all__'
+        
+class NotaByAlumnoAndCursoView(generics.ListAPIView):
+    serializer_class = NotasSerializer
+
+    def get_queryset(self):
+        alumno_id = self.request.query_params.get('alumno')
+        curso_id = self.kwargs['curso_id']
+
+        queryset = Nota.objects.filter(alumno=alumno_id, laboratorio__curso=curso_id)
+        return queryset
+    
+class LaboratorioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Laboratorio
         fields = '__all__'
 
 class KeyAlumnosSerializer(serializers.ModelSerializer):
