@@ -1,3 +1,4 @@
+'''
 import sys 
 import paho.mqtt.client as mqtt
 import pymysql
@@ -155,3 +156,4 @@ try:
 except KeyboardInterrupt:
     # Detener el bucle y desconectar el cliente MQTT al presionar Ctrl+C
     stop_mqtt_loop()
+'''
